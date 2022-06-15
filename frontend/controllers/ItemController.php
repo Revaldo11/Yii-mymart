@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use app\components\StatisticComponent;
 use frontend\models\Item;
 use frontend\models\Statistic;
 use frontend\models\ItemSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,7 +25,7 @@ class ItemController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -39,6 +41,7 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
+        Yii::$app->statisticComponent->trigger(StatisticComponent::ON_SAVE_STAT);
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -59,6 +62,9 @@ class ItemController extends Controller
     public function actionView($id)
     {
 
+        Yii::$app->statisticComponent->trigger(StatisticComponent::ON_SAVE_STAT);
+
+
         $this->createStatistic();
 
         return $this->render('view', [
@@ -66,18 +72,17 @@ class ItemController extends Controller
         ]);
     }
 
-    public function createStatistic()
-    {
-        $model = new Statistic();
+    // public function createStatistic()
+    // {
+    //     $model = new Statistic();
 
-        $model->access_time = date("Y-m-d H:i:s");
-        $model->user_ip = \Yii::$app->request->userIP;
-        $model->user_host = \Yii::$app->request->gethostinfo();
-        $model->path_info = \Yii::$app->request->pathInfo;
-        $model->query_string = \Yii::$app->request->queryString;
-        // var_dump($model);
-        $model->save();
-    }
+    //     $model->access_time = date("Y-m-d H:i:s");
+    //     $model->user_ip = \Yii::$app->request->userIP;
+    //     $model->user_host = \Yii::$app->request->gethostinfo();
+    //     $model->path_info = \Yii::$app->request->pathInfo;
+    //     $model->query_string = \Yii::$app->request->queryString;
+    //     $model->save();
+    // }
 
     /**
      * Finds the Item model based on its primary key value.
