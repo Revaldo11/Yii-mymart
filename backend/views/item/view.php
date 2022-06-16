@@ -4,17 +4,17 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model frontend\models\ItemCategory */
+/* @var $model frontend\models\Item */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Item Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="item-category-view">
+<div class="item-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <h4>Revaldo Putra</h4>
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -31,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'parent_category',
+            'price',
+            'category_id',
         ],
     ]) ?>
 

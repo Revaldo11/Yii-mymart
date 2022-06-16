@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="item-category-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <h4>Revaldo Putra</h4>
 
     <p>
         <?= Html::a('Create Item Category', ['create'], ['class' => 'btn btn-success']) ?>
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'parent_category',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, frontend\models\ItemCategory $model, $key, $index, $column) {
+                'urlCreator' => function ($action, backend\models\ItemCategory $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }
             ],

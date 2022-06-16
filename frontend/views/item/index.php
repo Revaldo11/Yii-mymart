@@ -15,13 +15,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="item-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <h4>Revaldo Putra</h4>
 
     <p>
         <?= Html::a('Create Item', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, frontend\models\Item $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>

@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'name'=>'Toko Baru',
+    'name' => 'Toko Baru',
     'defaultRoute' => 'item/index',
     // 'defaultRoute'=> 'item/index',
     'basePath' => dirname(__DIR__),
@@ -39,14 +39,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        
     ],
     'params' => $params,
 ];
