@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
+use app\components\MyComponent;
 use app\components\StatisticComponent;
 use frontend\models\Item;
-use frontend\models\Statistic;
 use frontend\models\ItemSearch;
 use Yii;
 use yii\web\Controller;
@@ -41,15 +41,32 @@ class ItemController extends Controller
      */
     public function actionIndex()
     {
-        Yii::$app->statisticComponent->trigger(StatisticComponent::ON_SAVE_STAT);
+        // Yii::$app->myComponents->trigger(MyComponent::ON_SAVE_STAT);
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $this->createStatistic();
+        // $this->createStatistic();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCreate()
+    {
+        $model = new Item();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
         ]);
     }
 
@@ -62,10 +79,8 @@ class ItemController extends Controller
     public function actionView($id)
     {
 
-        Yii::$app->statisticComponent->trigger(StatisticComponent::ON_SAVE_STAT);
-
-
-        $this->createStatistic();
+        // Yii::$app->statisticComponent->trigger(MyComponent::ON_SAVE_STAT);
+        // $this->createStatistic();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
