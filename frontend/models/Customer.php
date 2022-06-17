@@ -11,8 +11,6 @@ use Yii;
  * @property string|null $name
  * @property string|null $email
  * @property int $user_id
- * @property string|null $created_at
- * @property string|null $updated_at
  */
 class Customer extends \yii\db\ActiveRecord
 {
@@ -32,7 +30,6 @@ class Customer extends \yii\db\ActiveRecord
         return [
             [['user_id'], 'required'],
             [['user_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
             [['name', 'email'], 'string', 'max' => 255],
         ];
     }
@@ -47,8 +44,6 @@ class Customer extends \yii\db\ActiveRecord
             'name' => 'Name',
             'email' => 'Email',
             'user_id' => 'User ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 }

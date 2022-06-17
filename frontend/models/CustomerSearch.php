@@ -18,7 +18,7 @@ class CustomerSearch extends Customer
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['name', 'email', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'email'], 'safe'],
         ];
     }
 
@@ -60,8 +60,6 @@ class CustomerSearch extends Customer
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
