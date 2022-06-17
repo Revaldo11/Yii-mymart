@@ -59,4 +59,9 @@ class Item extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ItemCategory::className(), ['id' => 'category_id']);
     }
+
+    public function getItems()
+    {
+        return Item::find()->all();
+    }
 }

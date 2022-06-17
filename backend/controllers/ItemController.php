@@ -2,14 +2,13 @@
 
 namespace backend\controllers;
 
-use app\components\MyComponent;
-use app\components\StatisticComponent;
-use backend\models\Item;
-use backend\models\ItemSearch;
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use backend\models\Item;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
+use backend\models\ItemSearch;
+use yii\web\NotFoundHttpException;
 
 /**
  * ItemController implements the CRUD actions for Item model.
@@ -58,8 +57,19 @@ class ItemController extends Controller
         $model = new Item();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model->file_upload = UploadedFile::getInstance($model, 'file_upload');
+            if ($model->file_upload) {
+                $fileName = $model->file_upload->baseName . '.' . uniqid() . $model->file_upload->extension;
+                $model->file_upload->saveAs('@frontend/web/uploads/' . $fileName);
+                $model->img_url = $fileName;
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->img_url = '';
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -70,18 +80,26 @@ class ItemController extends Controller
         ]);
     }
 
-    public function update()
+    public function actionUpdate($id)
     {
-        $model = new Item();
+        $model = $this->findModel($id);
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model->file_upload = UploadedFile::getInstance($model, 'file_upload');
+            if ($model->file_upload) {
+                $fileName = $model->file_upload->baseName . '.' . $model->file_upload->extension;
+                $model->file_upload->saveAs('@frontend/web/uploads/' . $fileName);
+                $model->img_url = $fileName;
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->img_url = '';
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);

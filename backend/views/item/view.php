@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <?= Html::img('../../../frontend/web/uploads/' . $model->img_url, ['class' => 'img-thumbnail rounded mx-auto d-block mb-3 mt-5', 'width' => '300px']) ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

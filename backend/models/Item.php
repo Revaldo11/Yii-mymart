@@ -16,6 +16,9 @@ use Yii;
  */
 class Item extends \yii\db\ActiveRecord
 {
+
+    public $file_upload;
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +37,7 @@ class Item extends \yii\db\ActiveRecord
             [['price', 'category_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ItemCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['file_upload'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
 

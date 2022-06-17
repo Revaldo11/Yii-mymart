@@ -42,6 +42,20 @@ class ContactForm extends Model
         ];
     }
 
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            Yii::$app->session->setFlash('contactFormSubmitted');
+
+            return $this->refresh();
+        }
+
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Sends an email to the specified email address using the information collected by this model.
      *
