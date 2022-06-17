@@ -142,12 +142,11 @@ class CustomerController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionrShowOrder()
+    public function actionShowOrder()
     {
-        $customer = Customer::find()->where(['user_id' => Yii::$app->user->identity->id])->one();
-        $orders = Order::find()->where(['customer_id' => $customer->id])->all();
-        return $this->render('show_order', [
-            'orders' => $orders,
+        $order = Order::find()->all();
+        return $this->render('show-order', [
+            'orders' => $order,
         ]);
     }
 }

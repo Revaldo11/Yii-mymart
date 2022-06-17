@@ -43,4 +43,17 @@ class Order extends \yii\db\ActiveRecord
             'customer_id' => 'Customer ID',
         ];
     }
+
+    public function getItems()
+    {
+        // return Yii::$app->db->createCommand("SELECT * FROM 'order'JOIN 'order_item' ON 'order'.id = 'order_item'.order_id")->queryAll();
+        return Yii::$app->db->createCommand("SELECT * FROM `order`
+        JOIN order_item ON `order`.id = order_item.order_id
+        JOIN item ON order_item.id = item.id")->queryAll();
+    }
+
+    public function getCustomers()
+    {
+        return $this->hasMany(Customer::class, ['id' => 'customer_id']);
+    }
 }
